@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "885489502480",
+    "project_id": "womeninstem-61e48",
+    "storage_bucket": "womeninstem-61e48.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885489502480:android:ed2a7d759930540b8e3d95",
+        "android_client_info": {
+          "package_name": "com.kellycasey.womeninstem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6MdrpPSfz_lOcs2wx4FXHFO7i5kXLg0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
