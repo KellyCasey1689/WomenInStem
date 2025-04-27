@@ -12,14 +12,29 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.kellycasey.womeninstem.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_search"
+        android:name="com.kellycasey.womeninstem.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.kellycasey.womeninstem.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_inbox"
+        android:name="com.kellycasey.womeninstem.ui.inbox.InboxFragment"
+        android:label="Inbox"
+        tools:layout="@layout/fragment_inbox" />
+    <fragment
+        android:id="@+id/nav_studybuddy"
+        android:name="com.kellycasey.womeninstem.ui.studybuddy.StudyBuddyFragment"
+        android:label="StudyBuddy"
+        tools:layout="@layout/fragment_study_buddy" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.kellycasey.womeninstem.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_community"
+        android:name="com.kellycasey.womeninstem.ui.community.CommunityFragment"
+        android:label="Community"
+        tools:layout="@layout/fragment_profile" />
+
 </navigation>

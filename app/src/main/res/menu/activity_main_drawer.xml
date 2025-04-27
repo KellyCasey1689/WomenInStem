@@ -9,12 +9,26 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_search" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_inbox"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_inbox" />
+        <item
+            android:id="@+id/nav_studybuddy"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_studybuddy" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_community"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_community" />
+
+
     </group>
 </menu>
