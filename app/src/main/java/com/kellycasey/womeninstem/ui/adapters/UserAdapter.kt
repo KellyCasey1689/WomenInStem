@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class UserAdapter(
     private var userList: List<User>,
-    private val onRequestClick: (String, String) -> Unit
+    private val onRequestClick: (String) -> Unit
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     inner class UserViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -25,7 +25,7 @@ class UserAdapter(
             // 1) Check if already study buddies
             val isBuddy = currentUserId != null && user.studyBuddies.contains(currentUserId)
 
-            // 2) Check if there is a pending request (either outgoing or incoming)
+            // 2) Check if there is a pending request
             val isPending = user.isRequestPending()
 
             when {
@@ -44,7 +44,7 @@ class UserAdapter(
             }
 
             binding.buttonRequestBuddy.setOnClickListener {
-                onRequestClick(user.id, "I'd like to be your study buddy!")
+                onRequestClick(user.id)
             }
         }
     }
@@ -55,8 +55,7 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = userList[position]
-        holder.bind(user)
+        holder.bind(userList[position])
     }
 
     override fun getItemCount(): Int = userList.size
