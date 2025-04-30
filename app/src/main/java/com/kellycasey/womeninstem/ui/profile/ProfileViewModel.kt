@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kellycasey.womeninstem.model.User
+import com.kellycasey.womeninstem.ui.adapters.ProfileField
 
 class ProfileViewModel : ViewModel() {
 

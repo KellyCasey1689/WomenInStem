@@ -1,4 +1,4 @@
-package com.kellycasey.womeninstem.ui.profile
+package com.kellycasey.womeninstem.ui.adapters
 
 import android.text.Editable
 import android.text.InputType
