@@ -2,6 +2,7 @@ package com.kellycasey.womeninstem.model
 
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import java.sql.Time
 
 /**
  * Represents a user in the system.
@@ -10,6 +11,10 @@ data class User(
     var id: String = "",
     var name: String = "",
     var subject: String = "",
+    var age: Int = 0,
+    var summary: String = "",
+    var createdAt: Timestamp? = Timestamp.now(),
+    var profilePictureUrl: String = "",
     var university: String = "",
     var studyBuddies: List<String> = emptyList(),
     var incomingRequests: List<IncomingRequest> = emptyList(),
