@@ -11,12 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnBackground"/>
 
     <EditText
         android:id="@+id/editValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="4dp"
+        android:textColor="?attr/colorOnBackground"/>
 </LinearLayout>

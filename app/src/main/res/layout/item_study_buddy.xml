@@ -12,26 +12,27 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonRemove"/>
+        app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/textViewSubject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/textViewName"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonRemove"/>
+        app:layout_constraintEnd_toStartOf="@id/buttonRemove"
+        app:layout_constraintTop_toBottomOf="@id/textViewName"/>
 
     <Button
         android:id="@+id/buttonRemove"
+        style="@style/BlushButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remove"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

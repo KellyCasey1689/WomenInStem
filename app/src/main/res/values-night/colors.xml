@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Invert for dark mode -->
+    <color name="color_primary">#F2C5D4</color>
+    <color name="color_primary_variant">#FFDDE1</color>
+    <color name="color_on_primary">#000000</color>
+
+    <color name="color_secondary">#8E57A8</color>
+    <color name="color_secondary_variant">#A56CC1</color>
+    <color name="color_on_secondary">#000000</color>
+
+    <!-- Dark background, light text -->
+    <color name="color_tertiary">#FFFFFF</color>
+    <color name="color_on_background">#FFFFFF</color>
+
+    <color name="color_background">#333333</color>
+    <color name="color_surface">#333333</color>
+</resources>

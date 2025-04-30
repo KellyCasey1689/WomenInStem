@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MaterialComponents color attrs -->
+    <attr name="colorPrimary"            format="reference|color"/>
+    <attr name="colorPrimaryVariant"     format="reference|color"/>
+    <attr name="colorOnPrimary"          format="reference|color"/>
+
+    <attr name="colorSecondary"          format="reference|color"/>
+    <attr name="colorSecondaryVariant"   format="reference|color"/>
+    <attr name="colorOnSecondary"        format="reference|color"/>
+
+    <attr name="colorBackground"         format="reference|color"/>
+    <attr name="colorSurface"            format="reference|color"/>
+    <attr name="colorOnBackground"       format="reference|color"/>
+</resources>

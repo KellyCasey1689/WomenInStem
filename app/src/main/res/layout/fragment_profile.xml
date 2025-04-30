@@ -6,6 +6,7 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
     tools:context=".ui.profile.ProfileFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,8 +18,9 @@
 
     <Button
         android:id="@+id/btnSaveProfile"
+        style="@style/BlushButton"
+        android:text="Save Profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Profile"
         android:layout_marginTop="8dp"/>
 </LinearLayout>

@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="pink">#FFDDE1</color> <!-- Blush Pink 🎀 -->
+    <!-- Primary – Pastel Pink -->
+    <color name="color_primary">#FFDDE1</color>
+    <color name="color_primary_variant">#F2C5D4</color>
+    <color name="color_on_primary">#FFFFFF</color>
 
+    <!-- Secondary – Dusty Mauve -->
+    <color name="color_secondary">#A56CC1</color>
+    <color name="color_secondary_variant">#8E57A8</color>
+    <color name="color_on_secondary">#FFFFFF</color>
+
+    <!-- Neutral – Charcoal Grey -->
+    <color name="color_tertiary">#333333</color>
+    <color name="color_on_background">#333333</color>
+
+    <!-- Background & Surface -->
+    <color name="color_background">#FFFFFF</color>
+    <color name="color_surface">#FFFFFF</color>
 </resources>

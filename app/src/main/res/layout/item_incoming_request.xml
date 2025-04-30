@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -21,8 +22,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintTop_toBottomOf="@id/textViewRequesterName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

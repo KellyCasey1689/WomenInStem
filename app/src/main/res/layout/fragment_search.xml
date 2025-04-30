@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorBackground"
     tools:context=".ui.search.SearchFragment">
 
-    <!-- Search Input -->
     <EditText
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
@@ -18,11 +18,11 @@
         android:drawablePadding="8dp"
         android:layout_margin="12dp"
         android:inputType="text"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- RecyclerView for results -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUsers"
         android:layout_width="0dp"

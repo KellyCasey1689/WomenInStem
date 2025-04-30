@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -7,41 +8,36 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:text="Name" />
+            android:textColor="?attr/colorOnBackground"/>
 
         <TextView
             android:id="@+id/textViewSubject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:text="Subject" />
+            android:textColor="?attr/colorOnBackground"/>
 
         <TextView
             android:id="@+id/textViewUniversity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@android:color/black"
-            android:text="University" />
+            android:textColor="?attr/colorOnBackground"/>
 
         <Button
             android:id="@+id/buttonRequestBuddy"
+            style="@style/BlushButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Request Buddy"
-            android:layout_marginTop="8dp"
-            android:background="@color/pink"
-            android:textColor="@android:color/white" />
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

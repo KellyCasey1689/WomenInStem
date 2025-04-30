@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="?attr/colorBackground">
 
     <EditText
         android:id="@+id/emailEditText"
@@ -11,28 +12,23 @@
         android:layout_height="wrap_content"
         android:hint="Enter your email"
         android:inputType="textEmailAddress"
-        android:textColor="@android:color/black"
-        android:background="@android:color/darker_gray"
         android:textSize="18sp"
+        android:textColor="?attr/colorOnBackground"
+        android:background="?attr/colorSurface"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="100dp"
         android:layout_marginHorizontal="24dp"/>
 
-
-
     <Button
         android:id="@+id/sendLinkButton"
+        style="@style/BlushButton"
+        android:text="Send Sign-In Link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Sign-In Link"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/holo_blue_light"
         app:layout_constraintTop_toBottomOf="@id/emailEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
