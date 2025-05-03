@@ -46,12 +46,3 @@ data class Thread(
     var unreadCount: Int = 0,                     // number of unseen messages
     var lastMessage: LastMessage? = null          // duplicate of Conversation.lastMessage
 )
-
-/**
- * FCM device token for push notifications
- */
-@IgnoreExtraProperties
-data class Device(
-    var token: String = "",
-    var platform: String = ""                     // e.g., "android"
-)
