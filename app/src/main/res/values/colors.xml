@@ -16,5 +16,5 @@
 
     <!-- Background & Surface -->
     <color name="color_background">#FFFFFF</color>
-    <color name="color_surface">#FFFFFF</color>
+    <color name="color_surface">#FAFAFA</color>
 </resources>

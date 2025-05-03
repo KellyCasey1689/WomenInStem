@@ -1,6 +1,7 @@
 package com.kellycasey.womeninstem.model
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 /**
@@ -8,7 +9,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
  */
 @IgnoreExtraProperties
 data class Conversation(
-    var id: String = "",
+    @get:Exclude var id: String = "",
     var participants: List<String> = listOf(),           // user IDs
     var createdAt: Timestamp = Timestamp.now(),
     var lastMessage: LastMessage? = null
@@ -20,7 +21,8 @@ data class Conversation(
 @IgnoreExtraProperties
 data class LastMessage(
     var text: String = "",
-    var timestamp: Timestamp = Timestamp.now()
+    var timestamp: Timestamp = Timestamp.now(),
+    var senderName: String = ""
 )
 
 /**
@@ -28,10 +30,9 @@ data class LastMessage(
  */
 @IgnoreExtraProperties
 data class Message(
-    var id: String = "",
+    @get:Exclude var id: String = "",
     var senderId: String = "",
     var senderName: String = "",       // denormalized for UI
-    var senderPhotoUrl: String = "",
     var text: String = "",
     var createdAt: Timestamp = Timestamp.now()
 )
@@ -44,5 +45,5 @@ data class Thread(
     var conversationId: String = "",
     var lastRead: Timestamp = Timestamp.now(),    // when this user last opened
     var unreadCount: Int = 0,                     // number of unseen messages
-    var lastMessage: LastMessage? = null          // duplicate of Conversation.lastMessage
+    var lastMessage: LastMessage? = null        // duplicate of Conversation.lastMessage
 )

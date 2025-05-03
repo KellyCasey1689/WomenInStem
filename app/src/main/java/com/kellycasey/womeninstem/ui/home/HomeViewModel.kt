@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.kellycasey.womeninstem.model.NewsItem
+import com.kellycasey.womeninstem.util.TestMessageSeeder
 
 class HomeViewModel : ViewModel() {
 
@@ -19,6 +20,11 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun fetchNews() {
+
+        val seeder = TestMessageSeeder(db)
+
+        //seeder.seedConversation {  }
+
         db.collection("newsfeed")
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .get()

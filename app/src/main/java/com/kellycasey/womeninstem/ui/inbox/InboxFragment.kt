@@ -4,35 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.kellycasey.womeninstem.databinding.FragmentHomeBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.kellycasey.womeninstem.databinding.FragmentInboxBinding
+import com.kellycasey.womeninstem.ui.adapters.ThreadAdapter
 
-class InboxFragment: Fragment() {
+class InboxFragment : Fragment() {
 
     private var _binding: FragmentInboxBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var viewModel: InboxViewModel
+    private lateinit var adapter: ThreadAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(InboxViewModel::class.java)
-
         _binding = FragmentInboxBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return root
+
+        adapter = ThreadAdapter(currentUserId)
+        binding.recyclerThreads.layoutManager = LinearLayoutManager(context)
+        binding.recyclerThreads.adapter = adapter
+
+        viewModel = ViewModelProvider(this)[InboxViewModel::class.java]
+        viewModel.threads.observe(viewLifecycleOwner) { threads ->
+            adapter.submitList(threads)
         }
+
         return root
     }
 
