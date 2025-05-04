@@ -10,7 +10,6 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @IgnoreExtraProperties
 data class Conversation(
     @get:Exclude var id: String = "",
-    var conversationName: String = "",
     var participants: List<String> = listOf(),           // user IDs
     var createdAt: Timestamp = Timestamp.now(),
     var lastMessage: LastMessage? = null

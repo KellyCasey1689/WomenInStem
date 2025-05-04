@@ -22,7 +22,6 @@ class HomeViewModel : ViewModel() {
     private fun fetchNews() {
 
         val seeder = TestMessageSeeder(db)
-
         //seeder.seedConversation {  }
 
         db.collection("newsfeed")

@@ -17,4 +17,7 @@
     <!-- Background & Surface -->
     <color name="color_background">#FFFFFF</color>
     <color name="color_surface">#FAFAFA</color>
+
+    <!-- Timestamp (subtle gray) -->
+    <color name="color_timestamp">#999999</color>
 </resources>

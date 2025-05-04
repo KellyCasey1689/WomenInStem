@@ -9,8 +9,8 @@ import com.kellycasey.womeninstem.model.Thread
 
 class TestMessageSeeder(private val db: FirebaseFirestore) {
 
-    private val userA = "QYQZNtWByCNXiB5P19ykbtsOrus1"
-    private val userB = "8bSt747qlgcTJkU3r7qVqwd555j2"
+    private val userA = "QYQZNtWByCNXiB5P19ykbtsOrus1"  // Alice
+    private val userB = "8bSt747qlgcTJkU3r7qVqwd555j2"   // Bob
 
     fun seedConversation(onComplete: (Boolean) -> Unit) {
         val conversationRef = db.collection("conversations").document()
@@ -32,6 +32,7 @@ class TestMessageSeeder(private val db: FirebaseFirestore) {
             senderName = messages.last().second
         )
 
+        // Set the conversation name to the OTHER user's name (choose one arbitrarily)
         val conversation = Conversation(
             participants = listOf(userA, userB),
             createdAt = now,
@@ -50,15 +51,19 @@ class TestMessageSeeder(private val db: FirebaseFirestore) {
             batch.set(messageRef, message)
         }
 
+        // Thread for Alice (userA) - conversationName is Bob
         val threadA = Thread(
             conversationId = conversationId,
+            conversationName = "Bob",
             lastRead = now,
             unreadCount = 0,
             lastMessage = lastMessage
         )
 
+        // Thread for Bob (userB) - conversationName is Alice
         val threadB = Thread(
             conversationId = conversationId,
+            conversationName = "Alice",
             lastRead = Timestamp(0, 0),
             unreadCount = messages.size,
             lastMessage = lastMessage
