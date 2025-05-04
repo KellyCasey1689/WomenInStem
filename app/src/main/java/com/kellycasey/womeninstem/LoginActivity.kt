@@ -24,9 +24,32 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
-        db   = FirebaseFirestore.getInstance("womeninstem-db")
+        db = FirebaseFirestore.getInstance("womeninstem-db")
 
-        // 🔥 If already signed in, go straight to MainActivity
+        // 🔥 Handle Firebase email sign-in link before anything else
+        val emailLink = intent?.data?.toString()
+        if (emailLink != null && auth.isSignInWithEmailLink(emailLink)) {
+            val email = getSharedPreferences("prefs", MODE_PRIVATE)
+                .getString("email", null)
+
+            if (email != null) {
+                auth.signInWithEmailLink(email, emailLink)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                            ensureUserDocument()
+                        } else {
+                            Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                            Log.e("LoginActivity", "Sign-in error", task.exception)
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "No saved email found.", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+
+        // 🔥 Already signed in? Go straight to main screen
         if (auth.currentUser != null) {
             launchMain()
             return
@@ -34,8 +57,8 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        emailEditText   = findViewById(R.id.emailEditText)
-        sendLinkButton  = findViewById(R.id.sendLinkButton)
+        emailEditText = findViewById(R.id.emailEditText)
+        sendLinkButton = findViewById(R.id.sendLinkButton)
 
         sendLinkButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -75,34 +98,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        val emailLink = intent?.data?.toString()
-        if (emailLink != null && auth.isSignInWithEmailLink(emailLink)) {
-            val email = getSharedPreferences("prefs", MODE_PRIVATE)
-                .getString("email", null)
-
-            if (email != null) {
-                auth.signInWithEmailLink(email, emailLink)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                            ensureUserDocument()
-                        } else {
-                            Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-            } else {
-                Toast.makeText(this, "No saved email found.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    /**
-     * After sign-in, check if a Firestore document exists at users/{uid}.
-     * If not, create one using our User data class with default values.
-     */
     private fun ensureUserDocument() {
         val currentUser = auth.currentUser ?: return
         val uid = currentUser.uid
@@ -111,28 +106,25 @@ class LoginActivity : AppCompatActivity() {
         userDocRef.get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
-                    // Already have a profile—go to main UI
                     launchMain()
                 } else {
-                    // Derive a name: use displayName if set, otherwise email (or local part)
                     val rawName = currentUser.displayName
                     val emailName = currentUser.email ?: ""
                     val nameToSave = when {
-                        !rawName.isNullOrBlank()   -> rawName
-                        emailName.contains("@")    -> emailName.substringBefore("@")
-                        else                       -> emailName
+                        !rawName.isNullOrBlank() -> rawName
+                        emailName.contains("@") -> emailName.substringBefore("@")
+                        else -> emailName
                     }
 
                     val newUser = User(
-                        // id is excluded in your model, so Firestore will ignore it
-                        id                = uid,
-                        name              = nameToSave,
-                        subject           = "",
-                        summary           = "",
-                        createdAt         = Timestamp.now(),
+                        id = uid,
+                        name = nameToSave,
+                        subject = "",
+                        summary = "",
+                        createdAt = Timestamp.now(),
                         profilePictureUrl = currentUser.photoUrl?.toString() ?: "",
-                        university        = "",
-                        studyBuddies      = emptyList(),
+                        university = "",
+                        studyBuddies = emptyList(),
                     )
 
                     userDocRef.set(newUser)
