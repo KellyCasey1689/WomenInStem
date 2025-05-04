@@ -17,6 +17,6 @@
     <string name="menu_studybuddy">Study Buddy</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_community">Community</string>
-
+    <string name="no_other_participants">No other participants</string>
 
 </resources>

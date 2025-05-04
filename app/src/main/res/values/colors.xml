@@ -20,4 +20,7 @@
 
     <!-- Timestamp (subtle gray) -->
     <color name="color_timestamp">#999999</color>
+
+    <!-- Header background: slightly lighter than the dark chat background -->
+    <color name="header_background">#444444</color>
 </resources>

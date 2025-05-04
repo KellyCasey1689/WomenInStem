@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     android:background="?attr/colorBackground">
 
+    <!-- Participants header -->
+    <TextView
+        android:id="@+id/textViewParticipants"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@color/header_background"
+        android:text="Loading participants…"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <!-- Message list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMessages"
@@ -13,7 +28,7 @@
         android:layout_height="0dp"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewParticipants"
         app:layout_constraintBottom_toTopOf="@id/messageInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
