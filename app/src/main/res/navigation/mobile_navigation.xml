@@ -1,40 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    <navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mobile_navigation"
+        app:startDestination="@id/nav_home">
 
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.kellycasey.womeninstem.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        <fragment
+            android:id="@+id/nav_home"
+            android:name="com.kellycasey.womeninstem.ui.home.HomeFragment"
+            android:label="@string/menu_home"
+            tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/nav_search"
-        android:name="com.kellycasey.womeninstem.ui.search.SearchFragment"
-        android:label="Search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/nav_inbox"
-        android:name="com.kellycasey.womeninstem.ui.inbox.InboxFragment"
-        android:label="Inbox"
-        tools:layout="@layout/fragment_inbox" />
-    <fragment
-        android:id="@+id/nav_studybuddy"
-        android:name="com.kellycasey.womeninstem.ui.studybuddy.StudyBuddyFragment"
-        android:label="StudyBuddy"
-        tools:layout="@layout/fragment_study_buddy" />
-    <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.kellycasey.womeninstem.ui.profile.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/nav_community"
-        android:name="com.kellycasey.womeninstem.ui.community.CommunityFragment"
-        android:label="Community"
-        tools:layout="@layout/fragment_profile" />
+        <fragment
+            android:id="@+id/nav_search"
+            android:name="com.kellycasey.womeninstem.ui.search.SearchFragment"
+            android:label="Search"
+            tools:layout="@layout/fragment_search" />
 
-</navigation>
+        <fragment
+            android:id="@+id/nav_inbox"
+            android:name="com.kellycasey.womeninstem.ui.inbox.InboxFragment"
+            android:label="Inbox"
+            tools:layout="@layout/fragment_inbox">
+
+            <!-- This action carries the conversationId into ChatFragment -->
+            <action
+                android:id="@+id/action_nav_inbox_to_nav_chat"
+                app:destination="@id/nav_chat">
+                <argument
+                    android:name="conversationId"
+                    app:argType="string" />
+            </action>
+        </fragment>
+
+        <fragment
+            android:id="@+id/nav_studybuddy"
+            android:name="com.kellycasey.womeninstem.ui.studybuddy.StudyBuddyFragment"
+            android:label="StudyBuddy"
+            tools:layout="@layout/fragment_study_buddy" />
+
+        <fragment
+            android:id="@+id/nav_profile"
+            android:name="com.kellycasey.womeninstem.ui.profile.ProfileFragment"
+            android:label="Profile"
+            tools:layout="@layout/fragment_profile" />
+
+        <fragment
+            android:id="@+id/nav_community"
+            android:name="com.kellycasey.womeninstem.ui.community.CommunityFragment"
+            android:label="Community"
+            tools:layout="@layout/fragment_community" />
+
+        <!-- ChatFragment is *not* in your drawer—just a nav destination -->
+        <fragment
+            android:id="@+id/nav_chat"
+            android:name="com.kellycasey.womeninstem.ui.chat.ChatFragment"
+            android:label="Chat"
+            tools:layout="@layout/fragment_chat">
+            <argument
+                android:name="conversationId"
+                app:argType="string" />
+        </fragment>
+
+    </navigation>
+

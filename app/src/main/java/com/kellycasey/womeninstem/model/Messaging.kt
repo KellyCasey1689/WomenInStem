@@ -10,6 +10,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @IgnoreExtraProperties
 data class Conversation(
     @get:Exclude var id: String = "",
+    var conversationName: String = "",
     var participants: List<String> = listOf(),           // user IDs
     var createdAt: Timestamp = Timestamp.now(),
     var lastMessage: LastMessage? = null
@@ -43,6 +44,7 @@ data class Message(
 @IgnoreExtraProperties
 data class Thread(
     var conversationId: String = "",
+    var conversationName: String = "",
     var lastRead: Timestamp = Timestamp.now(),    // when this user last opened
     var unreadCount: Int = 0,                     // number of unseen messages
     var lastMessage: LastMessage? = null        // duplicate of Conversation.lastMessage

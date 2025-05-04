@@ -8,12 +8,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kellycasey.womeninstem.R
 import com.kellycasey.womeninstem.model.Thread
 
-class ThreadAdapter(private val currentUserId: String) :
-    RecyclerView.Adapter<ThreadAdapter.ThreadViewHolder>() {
+class ThreadAdapter(
+    private val currentUserId: String,
+    private val currentUserName: String,
+    private val onThreadClick: (String) -> Unit
+) : RecyclerView.Adapter<ThreadAdapter.ThreadViewHolder>() {
 
     private val items = mutableListOf<Thread>()
 
@@ -24,63 +28,70 @@ class ThreadAdapter(private val currentUserId: String) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThreadViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_thread, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_thread, parent, false)
         return ThreadViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ThreadViewHolder, position: Int) {
-        val context = holder.itemView.context
-        val backgroundRes = if (position % 2 == 0) R.color.color_surface else R.color.color_background
-        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, backgroundRes))
-        holder.bind(items[position])
+        // alternate background
+        val bgRes = if (position % 2 == 0) R.color.color_surface else R.color.color_background
+        holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, bgRes))
+
+        val thread = items[position]
+        holder.bind(thread)
+        holder.itemView.setOnClickListener { onThreadClick(thread.conversationId) }
     }
 
     override fun getItemCount(): Int = items.size
 
     inner class ThreadViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textUserName: TextView = itemView.findViewById(R.id.textUserName)
-        private val textTime: TextView = itemView.findViewById(R.id.textTime)
-        private val textLastMessage: TextView = itemView.findViewById(R.id.textLastMessage)
-        private val unreadIndicator: View = itemView.findViewById(R.id.unreadIndicator)
+        private val nameView: TextView = itemView.findViewById(R.id.textUserName)
+        private val previewView: TextView = itemView.findViewById(R.id.textLastMessage)
+        private val timeView: TextView = itemView.findViewById(R.id.textTime)
+        private val dot: View = itemView.findViewById(R.id.unreadIndicator)
 
         fun bind(thread: Thread) {
-            val conversationId = thread.conversationId
-
+            // 1) Load the other party’s name
             FirebaseFirestore.getInstance()
                 .collection("conversations")
-                .document(conversationId)
+                .document(thread.conversationId)
                 .get()
                 .addOnSuccessListener { doc ->
                     val participants = doc.get("participants") as? List<String> ?: return@addOnSuccessListener
-                    val otherUserId = participants.firstOrNull { it != currentUserId } ?: return@addOnSuccessListener
-
+                    val otherId = participants.firstOrNull { it != currentUserId } ?: return@addOnSuccessListener
                     FirebaseFirestore.getInstance()
                         .collection("users")
-                        .document(otherUserId)
+                        .document(otherId)
                         .get()
                         .addOnSuccessListener { userDoc ->
-                            val name = userDoc.getString("name") ?: "Unknown"
-                            textUserName.text = name
+                            nameView.text = userDoc.getString("name") ?: "Unknown"
                         }
                 }
 
-            val preview = thread.lastMessage?.let {
-                "${it.senderName}: ${it.text}"
-            } ?: ""
+            // 2) Build last‐message preview with "Me" fallback
+            val last = thread.lastMessage
+            if (last != null) {
+                // fall back to "Unknown" if blank
+                val senderName = last.senderName.takeIf { it.isNotBlank() } ?: "Unknown"
+                val displayName = if (senderName == currentUserName) "Me" else senderName
 
-            textLastMessage.text = preview
-            textTime.text = thread.lastMessage?.timestamp?.toDate()?.let {
-                DateFormat.format("MMM dd, HH:mm", it).toString()
-            } ?: ""
-
-            if (thread.unreadCount > 0) {
-                textUserName.setTypeface(null, Typeface.BOLD)
-                textLastMessage.setTypeface(null, Typeface.BOLD)
-                unreadIndicator.visibility = View.VISIBLE
+                previewView.text = "$displayName: ${last.text}"
+                timeView.text = DateFormat.format("MMM dd, HH:mm", last.timestamp.toDate()).toString()
             } else {
-                textUserName.setTypeface(null, Typeface.NORMAL)
-                textLastMessage.setTypeface(null, Typeface.NORMAL)
-                unreadIndicator.visibility = View.INVISIBLE
+                previewView.text = ""
+                timeView.text = ""
+            }
+
+            // 3) Unread styling
+            if (thread.unreadCount > 0) {
+                dot.visibility = View.VISIBLE
+                nameView.setTypeface(null, Typeface.BOLD)
+                previewView.setTypeface(null, Typeface.BOLD)
+            } else {
+                dot.visibility = View.INVISIBLE
+                nameView.setTypeface(null, Typeface.NORMAL)
+                previewView.setTypeface(null, Typeface.NORMAL)
             }
         }
     }
