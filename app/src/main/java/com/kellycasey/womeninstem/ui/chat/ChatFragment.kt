@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity           // ← for supportActionBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +39,7 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Toolbar setup
+        // Configure the Activity’s toolbar as the single AppBar for this screen
         (activity as? AppCompatActivity)?.supportActionBar?.apply {
             title = "Chat"
             setDisplayHomeAsUpEnabled(true)
@@ -48,32 +48,37 @@ class ChatFragment : Fragment() {
         val conversationId = arguments?.getString(ARG_CONVERSATION_ID) ?: return
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // RecyclerView setup
+        // 1) Load participants header
+        viewModel.loadParticipants(conversationId)
+        viewModel.participantNames.observe(viewLifecycleOwner) { names ->
+            binding.textViewParticipants.text = if (names.isEmpty()) {
+                getString(R.string.no_other_participants)
+            } else {
+                names.joinToString(", ")
+            }
+        }
+
+        // 2) Set up messages RecyclerView
         adapter = MessageAdapter(currentUserId)
         binding.recyclerMessages.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerMessages.adapter = adapter
 
-        // Load & observe messages
+        // 3) Load & observe messages
         viewModel.loadMessages(conversationId)
         viewModel.messages.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
             binding.recyclerMessages.scrollToPosition(list.size - 1)
         }
 
-        // Load & observe participants
-        viewModel.loadParticipants(conversationId)
-        viewModel.participantNames.observe(viewLifecycleOwner) { names ->
-            binding.textViewParticipants.text =
-                if (names.isEmpty()) getString(R.string.no_other_participants)
-                else names.joinToString(", ")
-        }
-
-        // Send button
+        // 4) Send button
         binding.buttonSend.setOnClickListener {
             val text = binding.editTextMessage.text.toString().trim()
             if (text.isNotEmpty()) {
                 viewModel.sendMessage(conversationId, text)
                 binding.editTextMessage.text?.clear()
+
+                // re-load participants in case something changed
+                viewModel.loadParticipants(conversationId)
             }
         }
     }
