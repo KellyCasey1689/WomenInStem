@@ -114,19 +114,27 @@ class LoginActivity : AppCompatActivity() {
                     // Already have a profile—go to main UI
                     launchMain()
                 } else {
-                    // No document yet—create with defaults
+                    // Derive a name: use displayName if set, otherwise email (or local part)
+                    val rawName = currentUser.displayName
+                    val emailName = currentUser.email ?: ""
+                    val nameToSave = when {
+                        !rawName.isNullOrBlank()   -> rawName
+                        emailName.contains("@")    -> emailName.substringBefore("@")
+                        else                       -> emailName
+                    }
+
                     val newUser = User(
-                        id                   = uid,
-                        name                 = currentUser.displayName ?: "",
-                        subject              = "",
-                        summary              = "",
-                        createdAt            = Timestamp.now(),
-                        profilePictureUrl    = currentUser.photoUrl?.toString() ?: "",
-                        university           = "",
-                        studyBuddies         = emptyList(),
-                        incomingRequests     = emptyList(),
-                        outgoingRequests     = emptyList()
+                        // id is excluded in your model, so Firestore will ignore it
+                        id                = uid,
+                        name              = nameToSave,
+                        subject           = "",
+                        summary           = "",
+                        createdAt         = Timestamp.now(),
+                        profilePictureUrl = currentUser.photoUrl?.toString() ?: "",
+                        university        = "",
+                        studyBuddies      = emptyList(),
                     )
+
                     userDocRef.set(newUser)
                         .addOnSuccessListener {
                             launchMain()

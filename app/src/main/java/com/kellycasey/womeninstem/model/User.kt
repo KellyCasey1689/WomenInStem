@@ -2,13 +2,15 @@ package com.kellycasey.womeninstem.model
 
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import java.sql.Time
+import com.google.firebase.firestore.Exclude
 
 /**
  * Represents a user in the system.
  */
 data class User(
-    var id: String = "",
+    @get:Exclude
+    var id: String = "",              // Firestore doc ID, not stored in the document
+
     var name: String = "",
     var subject: String = "",
     var age: Int = 0,
@@ -17,23 +19,20 @@ data class User(
     var profilePictureUrl: String = "",
     var university: String = "",
     var studyBuddies: List<String> = emptyList(),
+
+    @get:Exclude
     var incomingRequests: List<IncomingRequest> = emptyList(),
+
+    @get:Exclude
     var outgoingRequests: List<OutgoingRequest> = emptyList()
 ) {
     /**
-     * Returns true if there is a pending request involving the current user.
+     * Returns true if there is a pending incoming request from the current user.
      */
+    @Exclude
     fun isRequestPending(): Boolean {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return false
-
-        // Check for pending incoming requests from the logged‐in user
-        incomingRequests.forEach { request ->
-            if (request.fromUserId == currentUserId && request.status == "pending") {
-                return true
-            }
-        }
-
-        return false
+        return incomingRequests.any { it.fromUserId == currentUserId && it.status == "pending" }
     }
 }
 
